@@ -22,11 +22,12 @@ def extract_daily_sales():
         }
         response = requests.request("GET", url, headers=headers, data=payload)
         daily_sales = json.loads(response.text)['dailyReport']
-        transactionDate = current_date.replace(tzinfo=UTC)
-        daily_sales = daily_sales[0]
-        daily_sales["transactionDate"] = transactionDate
-        print(daily_sales)
-        push(daily_sales)
+        if daily_sales:
+            transactionDate = current_date.replace(tzinfo=UTC)
+            daily_sales = daily_sales[0]
+            daily_sales["transactionDate"] = transactionDate
+            print(daily_sales)
+            push(daily_sales)
         current_date += delta
         
 if __name__ == '__main__':
