@@ -6,6 +6,7 @@ import sys
 import base64
 from datetime import datetime, timezone, UTC, date, timedelta
 from zoneinfo import ZoneInfo
+from bson.decimal128 import Decimal128
 
 def extract_daily_sales():
     from_date = str(input('From date [YYYY-MM-DD]: '))
@@ -25,6 +26,7 @@ def extract_daily_sales():
         if daily_sales:
             transactionDate = current_date.replace(tzinfo=UTC)
             daily_sales = daily_sales[0]
+            daily_sales["curatedSales"] = Decimal128(str(daily_sales["trueNetSales"]+daily_sales["serviceCharges"]))
             daily_sales["transactionDate"] = transactionDate
             print(daily_sales)
             push(daily_sales)
