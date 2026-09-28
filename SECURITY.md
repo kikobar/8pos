@@ -5,6 +5,7 @@
 | Version | Supported          |
 | ------- | ------------------ |
 | 0.1.x   | :heavy_check_mark: |
+| 0.2.x   | :heavy_check_mark: |
 
 ## Reporting
 
