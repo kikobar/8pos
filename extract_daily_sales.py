@@ -37,4 +37,4 @@ if __name__ == '__main__':
     if len(sys.argv) != 3:
         extract_daily_sales()
     else:
-        extract_daily_sales(str(sys.argv[1]),str(sys.argv[2]))  
+        extract_daily_sales(str(sys.argv[1]),str(sys.argv[2]))
