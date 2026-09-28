@@ -8,10 +8,11 @@ from datetime import datetime, timezone, UTC, date, timedelta
 from zoneinfo import ZoneInfo
 from bson.decimal128 import Decimal128
 
-def extract_daily_sales():
-    from_date = str(input('From date [YYYY-MM-DD]: '))
+def extract_daily_sales(from_date=None,to_date=None):
+    if not(from_date and to_date):
+        from_date = str(input('From date [YYYY-MM-DD]: '))
+        to_date = str(input('To date [YYYY-MM-DD]: '))
     from_date = datetime.strptime(from_date, "%Y-%m-%d").replace(tzinfo=ZoneInfo(IANATimeZone))
-    to_date = str(input('To date [YYYY-MM-DD]: '))
     to_date = datetime.strptime(to_date, "%Y-%m-%d").replace(tzinfo=ZoneInfo(IANATimeZone))
     delta = timedelta(days=1)
     current_date = from_date
@@ -33,5 +34,7 @@ def extract_daily_sales():
         current_date += delta
         
 if __name__ == '__main__':
-    extract_daily_sales()
-    
+    if len(sys.argv) != 3:
+        extract_daily_sales()
+    else:
+        extract_daily_sales(str(sys.argv[1]),str(sys.argv[2]))  
