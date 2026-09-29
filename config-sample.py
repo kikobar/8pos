@@ -1,5 +1,9 @@
 IANATimeZone = "Asia/Singapore"
 
+#Methods of payment that should be deducted from sales (i.e. advanced payments)
+
+paymentsToDeduct = []
+
 # MongoDB Database parameters
 
 CONNECTION_STRING = "YOUR-MONGODB-CONNECTION-STRING-HERE"

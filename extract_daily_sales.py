@@ -25,9 +25,14 @@ def extract_daily_sales(from_date=None,to_date=None):
         response = requests.request("GET", url, headers=headers, data=payload)
         daily_sales = json.loads(response.text)['dailyReport']
         if daily_sales:
+            deduct_from_sales = 0.0
+            if daily_sales[0]["otherPayment"]:
+                for key in daily_sales[0]["otherPayment"]:
+                    if key["paymentId"] in paymentsToDeduct:
+                        deduct_from_sales += key["amount"]
             transactionDate = current_date.replace(tzinfo=UTC)
             daily_sales = daily_sales[0]
-            daily_sales["curatedSales"] = Decimal128(str(daily_sales["trueNetSales"]+daily_sales["serviceCharges"]))
+            daily_sales["curatedSales"] = Decimal128(str(daily_sales["trueNetSales"]+daily_sales["serviceCharges"]-deduct_from_sales))
             daily_sales["transactionDate"] = transactionDate
             print(daily_sales)
             push(daily_sales)
